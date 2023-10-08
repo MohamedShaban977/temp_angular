@@ -1,0 +1,65 @@
+<div class="mb-3">
+  <label for="" class="form-label">Categories</label>
+  <select class="form-select form-select-lg" name="category" id="proCat" [(ngModel)]="selectedCategoryId">
+
+    <!-- <select class="form-select form-select-lg" name="category" id="proCat" (change)="getValueSelected($event) "> -->
+    <option selected [value]="0">All</option>
+    <option *ngFor="let item of categories" [value]="item.id">{{item.name}}</option>
+
+  </select>
+
+</div>
+<button type="button" class="btn btn-primary" (click)="clearCat($event)">Clear</button>
+
+<div>
+  [To be Remove] For test: {{selectedCategoryId}}
+</div>
+
+<hr>
+
+<table class="table" style="--bs-table-bg:transparent;">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Prise</th>
+      <th>Image</th>
+      <th>Av. Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let pro of products; let index = index;  trackBy: trackByFn">
+      <!-- <tr *ngIf="pro.quantity!=0" [ngClass]="{'bg-warning': pro.quantity==0}" [hidden]="pro.quantity==0"> -->
+      <tr [ngClass]="{'bg-warning': pro.quantity==0}">
+
+
+        <td>#{{index+1}}</td>
+        <td>{{pro?.name}}</td>
+        <td>{{pro?.price}}</td>
+        <td><img [src]="pro?.imgUrl" alt="" class="rounded"></td>
+        <td>
+          <!-- <div *ngIf="pro.quantity!=0; else outOfStock">{{pro?.quantity}}</div>
+
+          <ng-template #outOfStock>Out Of Stock</ng-template> -->
+
+          <ng-container [ngSwitch]="pro.quantity">
+
+            <div *ngSwitchCase="0">Out Of Stock</div>
+            <div *ngSwitchCase="1">Last item!</div>
+            <div *ngSwitchCase="2">Last 2 item</div>
+            <div *ngSwitchDefault>{{pro.quantity}}</div>
+          </ng-container>
+
+        </td>
+        <!-- Template var  -->
+        <!-- <td><input #itemCount value="1" type="number" class="form-control"></td> -->
+        <!-- <td><button type="button" class="btn btn-secondary" (click)="bay(item.price,itemCount.value)">Bay</button></td> -->
+      </tr>
+    </ng-container>
+  </tbody>
+  <tfoot>
+    <tr>
+      <h3>Order Total price: {{orderTotalPrice}}</h3>
+    </tr>
+  </tfoot>
+</table>

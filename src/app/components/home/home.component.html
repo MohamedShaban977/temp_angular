@@ -1,0 +1,12 @@
+<!-- <img src="{{storInfo.imgUrl}}" alt=""> -->
+
+<img *ngIf="isShowImage" [src]="storInfo.imgUrl" class="img-fluid rounded mt-5" alt="">
+
+<button type="button" class="btn btn-primary" (click)="toggleImage()">Button</button>
+<h1>{{storInfo.name}}</h1>
+
+<h3>Our Branches:</h3>
+
+<ul>
+    <li *ngFor=" let item of storInfo.branches">{{item}}</li>
+</ul>
